@@ -1,0 +1,53 @@
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/bjwschaap/enver/command"
+	"github.com/urfave/cli"
+)
+
+// GlobalFlags are the global flags that can be set for the program
+var GlobalFlags = []cli.Flag{
+	cli.StringFlag{
+		EnvVar: "ENV_VEBOSE",
+		Name:   "vebose",
+		Value:  "",
+		Usage:  "",
+	},
+	cli.StringFlag{
+		EnvVar: "ENV_DEBUG",
+		Name:   "debug",
+		Value:  "",
+		Usage:  "",
+	},
+	cli.StringFlag{
+		EnvVar: "ENV_NOOP",
+		Name:   "noop",
+		Value:  "",
+		Usage:  "",
+	},
+}
+
+// Commands are all the commands supported by enver
+var Commands = []cli.Command{
+	{
+		Name:   "parse",
+		Usage:  "",
+		Action: command.CmdParse,
+		Flags:  []cli.Flag{},
+	},
+	{
+		Name:   "show",
+		Usage:  "",
+		Action: command.CmdShow,
+		Flags:  []cli.Flag{},
+	},
+}
+
+// CommandNotFound shows an error message when the user requests a command that doesn't exist
+func CommandNotFound(c *cli.Context, command string) {
+	fmt.Fprintf(os.Stderr, "%s: '%s' is not a %s command. See '%s --help'.", c.App.Name, command, c.App.Name, c.App.Name)
+	os.Exit(2)
+}
