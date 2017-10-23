@@ -10,23 +10,20 @@ import (
 
 // GlobalFlags are the global flags that can be set for the program
 var GlobalFlags = []cli.Flag{
-	cli.StringFlag{
-		EnvVar: "ENV_VEBOSE",
+	cli.BoolFlag{
+		EnvVar: "ENVER_VEBOSE",
 		Name:   "vebose",
-		Value:  "",
-		Usage:  "",
+		Usage:  "Be verbose; show information while parsing",
 	},
-	cli.StringFlag{
-		EnvVar: "ENV_DEBUG",
+	cli.BoolFlag{
+		EnvVar: "ENVER_DEBUG",
 		Name:   "debug",
-		Value:  "",
-		Usage:  "",
+		Usage:  "Show debug logging.",
 	},
-	cli.StringFlag{
-		EnvVar: "ENV_NOOP",
+	cli.BoolFlag{
+		EnvVar: "ENVER_NOOP",
 		Name:   "noop",
-		Value:  "",
-		Usage:  "",
+		Usage:  "Toggles a 'dry-run' only showing what would be done.",
 	},
 }
 
