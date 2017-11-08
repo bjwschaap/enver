@@ -15,5 +15,8 @@
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
 
+# Goland
+.idea/
+
 # Build of the actual program
 enver
