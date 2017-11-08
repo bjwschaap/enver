@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"sort"
+	"fmt"
 
 	"github.com/urfave/cli"
 )
@@ -32,5 +33,10 @@ func main() {
 
 	sort.Sort(cli.FlagsByName(app.Flags))
 	sort.Sort(cli.CommandsByName(app.Commands))
-	app.Run(os.Args)
+
+	err := app.Run(os.Args)
+	if err != nil {
+		fmt.Printf("%v", err)
+		os.Exit(1)
+	}
 }
