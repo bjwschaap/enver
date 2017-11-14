@@ -14,10 +14,16 @@ import (
 
 // CmdParse implements the enver 'parse' command
 func CmdParse(c *cli.Context) error {
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("current dir: %s", dir)
+
 	// Match any placeholder with form {{env.VAR}} and/or {{env.VAR|value}}
 	r := regexp.MustCompile(`{{env\.([\w\-]*)\|?(.*)?}}`)
 
-	config, err := config.FromFile(c.GlobalString("config"))
+	config, err := config.FromFile(c)
 	if err != nil {
 		return fmt.Errorf("error: %v", err)
 	}

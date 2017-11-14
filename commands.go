@@ -24,7 +24,7 @@ var GlobalFlags = []cli.Flag{
 		EnvVar: "ENVER_CONFIG",
 		Name:   "config, c",
 		Usage:  "Load configuration from `FILE`",
-		Value:  "enver.conf",
+		Value:  ".enver",
 	},
 }
 

@@ -10,14 +10,16 @@ import (
 
 // CmdShow implements the 'show' command
 func CmdShow(c *cli.Context) error {
-	config, err := config.FromFile(c.GlobalString("config"))
+	config, err := config.FromFile(c)
 	if err != nil {
 		return fmt.Errorf("error: %v", err)
 	}
 
 	files, err := config.FilesToParse(c)
 	if err != nil {
-		return fmt.Errorf("error while making list of files to parse: %v", err)
+		if c.GlobalBool("debug") || config.Debug {
+			log.Printf("error while making list of files to parse: %v", err)
+		}
 	}
 
 	log.Printf("Enver config file: %s", c.GlobalString("config"))

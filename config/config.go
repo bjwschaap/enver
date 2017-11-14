@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"log"
 
 	yaml "gopkg.in/yaml.v2"
 	"github.com/urfave/cli"
@@ -18,20 +19,25 @@ type Values struct {
 
 // FromFile loads the configurations settings into a Values struct, from a
 // textfile.
-func FromFile(file string) (Values, error) {
+func FromFile(c *cli.Context) (Values, error) {
 	var config Values
+	file := c.GlobalString("config")
 	if file != "" {
 		if _, notFoundFileErr := os.Stat(file); notFoundFileErr != nil {
-			return config, fmt.Errorf("configuration file %s does not exist", file)
+			if c.GlobalBool("debug") {
+				log.Printf("config file %s not found", file)
+				return config, nil
+			}
+		} else {
+			data, err := ioutil.ReadFile(file)
+			if err != nil {
+				return config, fmt.Errorf("error while reading configuration file: %v", err)
+			}
+			err = yaml.Unmarshal(data, &config)
+			if err != nil {
+				return config, fmt.Errorf("error while parsing configuration file: %v", err)
+			}
 		}
-	}
-	data, err := ioutil.ReadFile(file)
-	if err != nil {
-		return config, fmt.Errorf("error while reading configuration file: %v", err)
-	}
-	err = yaml.Unmarshal(data, &config)
-	if err != nil {
-		return config, fmt.Errorf("error while parsing configuration file: %v", err)
 	}
 	return config, nil
 }
