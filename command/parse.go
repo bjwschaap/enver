@@ -1,12 +1,12 @@
 package command
 
 import (
-	"io/ioutil"
-	"fmt"
-	"log"
-	"regexp"
 	"bytes"
+	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
+	"regexp"
 
 	"github.com/bjwschaap/enver/config"
 	"github.com/urfave/cli"
@@ -14,12 +14,6 @@ import (
 
 // CmdParse implements the enver 'parse' command
 func CmdParse(c *cli.Context) error {
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("current dir: %s", dir)
-
 	// Match any placeholder with form {{env.VAR}} and/or {{env.VAR|value}}
 	r := regexp.MustCompile(`{{env\.([\w\-]*)\|?(.*)?}}`)
 
